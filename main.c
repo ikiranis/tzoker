@@ -122,6 +122,17 @@ void gererateRandomNumbers(int array[], int elements, int limit)
 }
 
 /**
+ * Calculate how many columns can pick at this cost
+ *
+ * @param cost
+ * @return
+ */
+int calculateColumnsNumber(double cost)
+{
+    return (int) (cost / COLUMN_COST);
+}
+
+/**
  * Print array elements
  *
  * @param array
@@ -138,7 +149,7 @@ void printArray(int array[], int elements)
 
 int main()
 {
-    int numbers, tzokers;
+    int numbers, tzokers, columns;
     double cost;
 
     int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
@@ -149,16 +160,20 @@ int main()
 
     numbers = 10;
     tzokers = 3;
-    cost = 5.0;
+    cost = 2.50;
 
     gererateRandomNumbers(generatedNumbers, numbers, MAX_NUMBER);
     gererateRandomNumbers(generatedTzokers, tzokers, MAX_TZOKER);
+
 
     printf("Επιλεγμένοι αριθμοί: ");
     printArray(generatedNumbers, numbers); printf("\n");
 
     printf("Επιλεγμένα τζόκερ: ");
     printArray(generatedTzokers, tzokers); printf("\n");
+
+    columns = calculateColumnsNumber(cost);
+    printf("Σύνολο στηλών: %d\n", columns);
 
     return 0;
 }
