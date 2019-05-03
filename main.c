@@ -108,25 +108,17 @@ int isInArray(int hay, int array[], int elements)
  * @param generatedNumbers
  * @param generatedTzokers
  */
-void gererateRandomNumbers(int numbers, int tzokers, int generatedNumbers[], int generatedTzokers[])
+void gererateRandomNumbers(int array[], int elements, int limit)
 {
     int i;
     int randomNumber;
 
-    for (i=0; i<numbers; i++) {
+    for (i=0; i<elements; i++) {
         do {
-            randomNumber = getRandomNumber(1, MAX_NUMBER);
-        } while (isInArray(randomNumber, generatedNumbers, numbers));
+            randomNumber = getRandomNumber(1, limit);
+        } while (isInArray(randomNumber, array, elements));
 
-        generatedNumbers[i] = randomNumber;
-    }
-
-    for (i=0; i<tzokers; i++) {
-        do {
-            randomNumber = getRandomNumber(1, MAX_TZOKER);
-        } while (isInArray(randomNumber, generatedTzokers, tzokers));
-
-        generatedTzokers[i] = randomNumber;
+        array[i] = randomNumber;
     }
 }
 
@@ -160,7 +152,8 @@ int main()
     tzokers = 3;
     cost = 5.0;
 
-    gererateRandomNumbers(numbers, tzokers, generatedNumbers, generatedTzokers);
+    gererateRandomNumbers(generatedNumbers, numbers, MAX_NUMBER);
+    gererateRandomNumbers(generatedTzokers, tzokers, MAX_TZOKER);
 
     printf("Επιλεγμένοι αριθμοί: ");
     printArray(generatedNumbers, numbers); printf("\n");
