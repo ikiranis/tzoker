@@ -20,12 +20,35 @@
 #define MAX_TZOKER 20
 #define COLUMN_COST 0.50
 
-typedef struct node {
-    int number;
-    struct node *next;
-} RandomNumbers;
+/**
+ * Print array elements
+ *
+ * @param array
+ * @param numbers
+ */
+void printArray(int array[], int elements)
+{
+    int i;
 
-RandomNumbers *randomNumbersList;
+    for (i=0; i<elements; i++) {
+        printf("%d ", array[i]);
+    }
+}
+
+/**
+ * Calculate factorial
+ *
+ * @param number
+ * @return
+ */
+int factorial(int number)
+{
+    if(number==0) {
+        return 1; // Επιστρέφει 1 και τερματίζεται την αναδρομή
+    } else {
+        return number * factorial(number-1); // n!=n*(n-1)!
+    }
+}
 
 /**
  * Get the data from user
@@ -132,19 +155,27 @@ int calculateColumnsNumber(double cost)
     return (int) (cost / COLUMN_COST);
 }
 
-/**
- * Print array elements
- *
- * @param array
- * @param numbers
- */
-void printArray(int array[], int elements)
+void createCombinations(int array[], int elements, int columnNumbers)
 {
-    int i;
+    int i, j, k;
 
-    for (i=0; i<elements; i++) {
-        printf("%d ", array[i]);
+    int combinations = ( factorial(elements) / (factorial(columnNumbers) * factorial(elements-columnNumbers) ) );
+
+    int column[combinations][columnNumbers];
+
+    printf("\nΣύνολο συνδιασμών: %d\n", combinations);
+
+    for (i=0; i<combinations; i++) {
+        for (j=0; j<columnNumbers; j++) {
+            for (k=0; k<elements; k++) {
+                column[i][j] = array[j];
+            }
+        }
+
+        printArray(column[i], columnNumbers); printf("\n");
     }
+
+
 }
 
 int main()
@@ -165,6 +196,7 @@ int main()
     gererateRandomNumbers(generatedNumbers, numbers, MAX_NUMBER);
     gererateRandomNumbers(generatedTzokers, tzokers, MAX_TZOKER);
 
+    printf("\n");
 
     printf("Επιλεγμένοι αριθμοί: ");
     printArray(generatedNumbers, numbers); printf("\n");
@@ -174,6 +206,8 @@ int main()
 
     columns = calculateColumnsNumber(cost);
     printf("Σύνολο στηλών: %d\n", columns);
+
+    createCombinations(generatedNumbers, numbers, 5);
 
     return 0;
 }
