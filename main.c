@@ -68,7 +68,7 @@ void getUserData(int *numbers, int *tzokers, double *cost)
 }
 
 /**
- * Επιστρέφει έναν τυχαίο ακέραιο, στο διάστημα start-limit
+ * Get a random integer, in range start-limit
  *
  * @param start
  * @param limit
@@ -77,6 +77,27 @@ void getUserData(int *numbers, int *tzokers, double *cost)
 int getRandomNumber(int start, int limit)
 {
     return (int) (random() %limit + start);
+}
+
+/**
+ * Search hay in array
+ *
+ * @param hay
+ * @param array
+ * @param elements
+ * @return
+ */
+int isInArray(int hay, int array[], int elements)
+{
+    int i;
+
+    for (i=0; i<elements; i++) {
+        if (array[i] == hay) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 /**
@@ -90,13 +111,22 @@ int getRandomNumber(int start, int limit)
 void gererateRandomNumbers(int numbers, int tzokers, int generatedNumbers[], int generatedTzokers[])
 {
     int i;
+    int randomNumber;
 
     for (i=0; i<numbers; i++) {
-        generatedNumbers[i] = getRandomNumber(1, MAX_NUMBER);
+        do {
+            randomNumber = getRandomNumber(1, MAX_NUMBER);
+        } while (isInArray(randomNumber, generatedNumbers, numbers));
+
+        generatedNumbers[i] = randomNumber;
     }
 
     for (i=0; i<tzokers; i++) {
-        generatedTzokers[i] = getRandomNumber(1, MAX_TZOKER);
+        do {
+            randomNumber = getRandomNumber(1, MAX_TZOKER);
+        } while (isInArray(randomNumber, generatedTzokers, tzokers));
+
+        generatedTzokers[i] = randomNumber;
     }
 }
 
