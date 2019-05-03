@@ -68,6 +68,18 @@ void getUserData(int *numbers, int *tzokers, double *cost)
 }
 
 /**
+ * Επιστρέφει έναν τυχαίο ακέραιο, στο διάστημα start-limit
+ *
+ * @param start
+ * @param limit
+ * @return
+ */
+int getRandomNumber(int start, int limit)
+{
+    return (int) (random() %limit + start);
+}
+
+/**
  * Gererate random numbers and tzokers
  *
  * @param numbers
@@ -79,14 +91,12 @@ void gererateRandomNumbers(int numbers, int tzokers, int generatedNumbers[], int
 {
     int i;
 
-    srandom(time(NULL));
-
     for (i=0; i<numbers; i++) {
-        generatedNumbers[i] = (int) (random()%MAX_NUMBER+1);
+        generatedNumbers[i] = getRandomNumber(1, MAX_NUMBER);
     }
 
     for (i=0; i<tzokers; i++) {
-        generatedTzokers[i] = (int) (random()%MAX_TZOKER+1);
+        generatedTzokers[i] = getRandomNumber(1, MAX_TZOKER);
     }
 }
 
@@ -111,6 +121,8 @@ int main()
     double cost;
 
     int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
+
+    srandom(time(NULL));
 
 //    getUserData(&numbers, &tzokers, &cost);
 
