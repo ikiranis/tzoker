@@ -101,12 +101,11 @@ int isInArray(int hay, int array[], int elements)
 }
 
 /**
- * Gererate random numbers and tzokers
+ * Gererate random numbers for array
  *
- * @param numbers
- * @param tzokers
- * @param generatedNumbers
- * @param generatedTzokers
+ * @param elements
+ * @param limit
+ * @param array
  */
 void gererateRandomNumbers(int array[], int elements, int limit)
 {
