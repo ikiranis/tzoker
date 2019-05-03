@@ -13,6 +13,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
+#include <stdlib.h>
 
 #define MAX_NUMBER 45
 #define MAX_TZOKER 20
@@ -65,14 +67,64 @@ void getUserData(int *numbers, int *tzokers, double *cost)
     } while (*cost < COLUMN_COST);
 }
 
+/**
+ * Gererate random numbers and tzokers
+ *
+ * @param numbers
+ * @param tzokers
+ * @param generatedNumbers
+ * @param generatedTzokers
+ */
+void gererateRandomNumbers(int numbers, int tzokers, int generatedNumbers[], int generatedTzokers[])
+{
+    int i;
+
+    srandom(time(NULL));
+
+    for (i=0; i<numbers; i++) {
+        generatedNumbers[i] = (int) (random()%MAX_NUMBER+1);
+    }
+
+    for (i=0; i<tzokers; i++) {
+        generatedTzokers[i] = (int) (random()%MAX_TZOKER+1);
+    }
+}
+
+/**
+ * Print array elements
+ *
+ * @param array
+ * @param numbers
+ */
+void printArray(int array[], int elements)
+{
+    int i;
+
+    for (i=0; i<elements; i++) {
+        printf("%d ", array[i]);
+    }
+}
+
 int main()
 {
     int numbers, tzokers;
     double cost;
 
-    getUserData(&numbers, &tzokers, &cost);
+    int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
 
-    printf("\nUser Data: %d, %d, %3.2lf \n", numbers, tzokers, cost);
+//    getUserData(&numbers, &tzokers, &cost);
+
+    numbers = 10;
+    tzokers = 3;
+    cost = 5.0;
+
+    gererateRandomNumbers(numbers, tzokers, generatedNumbers, generatedTzokers);
+
+    printf("Επιλεγμένοι αριθμοί: ");
+    printArray(generatedNumbers, numbers); printf("\n");
+
+    printf("Επιλεγμένα τζόκερ: ");
+    printArray(generatedTzokers, tzokers); printf("\n");
 
     return 0;
 }
