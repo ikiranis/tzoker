@@ -184,6 +184,7 @@ void createCombinations(int array[], int elements, int columnNumbers)
         }
     }
 
+    // test
 
     for(i=0; i<combinations; i++){
         printArray(column[i], columnNumbers); printf("\n");
