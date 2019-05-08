@@ -157,7 +157,7 @@ int calculateColumnsNumber(double cost)
 
 void createCombinations(int array[], int elements, int columnNumbers)
 {
-    int i, j, k;
+    int i;
     int a, b, c, d, e;
 
     int combinations = ( factorial(elements) / (factorial(columnNumbers) * factorial(elements-columnNumbers) ) );
@@ -166,18 +166,21 @@ void createCombinations(int array[], int elements, int columnNumbers)
 
     printf("\nΣύνολο συνδιασμών: %d\n", combinations);
 
-    for (i=0; i<combinations; i++) {
-        for (a=0; a<elements; a++) {
-            for (b=0; b<elements; b++) {
-                for (c=0; c<elements; c++) {
-                    for (d=0; d<elements; d++) {
-                        for (e=0; e<elements; e++) {
-                            column[i][0] = array[a];
-                            column[i][1] = array[b];
-                            column[i][2] = array[c];
-                            column[i][3] = array[d];
-                            column[i][4] = array[e];
-                        }
+    i = 0;
+
+    for (a=0; a<elements; a++) {
+        for (b=a+1; b<elements; b++) {
+            for (c=b+1; c<elements; c++) {
+                for (d=c+1; d<elements; d++) {
+                    for (e=d+1; e<elements; e++) {
+
+                        column[i][0] = array[a];
+                        column[i][1] = array[b];
+                        column[i][2] = array[c];
+                        column[i][3] = array[d];
+                        column[i][4] = array[e];
+
+                        i++;
                     }
                 }
             }
