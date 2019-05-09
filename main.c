@@ -273,6 +273,20 @@ Node * getRandomColumn(int randomColumn)
 }
 
 /**
+ * Print a column
+ *
+ * @param column
+ */
+void printColumn(Column column)
+{
+    int i;
+
+    for(i=0; i<COLUMN_LENGTH; i++) {
+        printf("%d ", column.array[i]);
+    }
+}
+
+/**
  * Display random columns from columns list
  *
  * @param head
@@ -294,9 +308,7 @@ void printRandomColumns()
         randomColumn = getRandomColumn(randomNumbers[i]);
         randomTzoker = getRandomNumber(0, tzokers);
 
-        for(j=0; j<COLUMN_LENGTH; j++) {
-            printf("%d ", randomColumn->column.array[j]);
-        }
+        printColumn(randomColumn->column);
 
         printf(" | %d\n", generatedTzokers[randomTzoker]);
     }
