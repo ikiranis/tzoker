@@ -19,9 +19,10 @@
 #define MAX_NUMBER 45
 #define MAX_TZOKER 20
 #define COLUMN_COST 0.50
+#define columnLength 5
 
 typedef struct column {
-    int array[5];
+    int array[columnLength];
 } Column;
 
 typedef struct node {
@@ -48,6 +49,27 @@ void insertNodeToColumnsList(Node **head, Column column)
     new->column = column;
     new->next = *head;
     *head = new;
+}
+
+/**
+ * Display columns of Columns List
+ *
+ * @param head
+ */
+void displayColumnsList(Node *head)
+{
+    int i;
+    Node *current = head;
+
+    while(current != NULL) {
+        for(i=0; i<columnLength; i++) {
+            printf("%d ", current->column.array[i]);
+        }
+
+        printf("\n");
+
+        current = current->next;
+    }
 }
 
 /**
@@ -246,6 +268,7 @@ int main()
     printf("Σύνολο στηλών: %d\n", columns);
 
     createCombinations(&ColumnsList, generatedNumbers, numbers, 5);
+    displayColumnsList(ColumnsList);
 
     return 0;
 }
