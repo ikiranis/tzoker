@@ -272,6 +272,8 @@ Node * getRandomColumn(int randomColumn)
     return current;
 }
 
+
+
 /**
  * Print a column
  *
@@ -279,7 +281,18 @@ Node * getRandomColumn(int randomColumn)
  */
 void printColumn(Column column)
 {
-    int i;
+    int i, j, temp;
+
+    // Ascending Bubble sort
+    for (i=0; i<COLUMN_LENGTH-1; i++) {
+        for (j=COLUMN_LENGTH-1; j>=i+1; j--) {
+            if (column.array[j]<column.array[j-1]) {
+                temp = column.array[j-1];
+                column.array[j-1] = column.array[j];
+                column.array[j] = temp;
+            }
+        }
+    }
 
     for(i=0; i<COLUMN_LENGTH; i++) {
         printf("%d ", column.array[i]);
@@ -340,8 +353,6 @@ int main()
 
     combinations = createCombinations(numbers);
     printf("\nΣύνολο συνδιασμών: %d\n", combinations);
-
-//    displayColumnsList(ColumnsList);
 
     printRandomColumns();
 
