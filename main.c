@@ -326,7 +326,7 @@ int main()
 {
     srandom(time(NULL));
 
-    getUserData(&numbers, &tzokers, &cost);
+    getUserData();
 
 //    numbers = 10;
 //    tzokers = 3;
@@ -343,7 +343,7 @@ int main()
     printf("Επιλεγμένα τζόκερ: ");
     printArray(generatedTzokers, tzokers); printf("\n");
 
-    columns = calculateColumnsNumber(cost);
+    columns = calculateColumnsNumber();
     printf("Σύνολο στηλών: %d\n", columns);
 
     combinations = createCombinations(numbers);
