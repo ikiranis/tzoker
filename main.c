@@ -20,6 +20,36 @@
 #define MAX_TZOKER 20
 #define COLUMN_COST 0.50
 
+typedef struct column {
+    int array[5];
+} Column;
+
+typedef struct node {
+    Column column;
+    struct node * next;
+} Node;
+
+/**
+ * And column to columns List
+ *
+ * @param head
+ * @param column
+ */
+void insertNodeToColumnsList(Node **head, Column column)
+{
+    Node *new = (Node *) malloc(sizeof(Node));
+
+    if (new == NULL)
+    {
+        printf("Δεν υπάρχει διαθέσιμη Μνήμη\n");
+        exit(1);
+    }
+
+    new->column = column;
+    new->next = *head;
+    *head = new;
+}
+
 /**
  * Print array elements
  *
@@ -155,18 +185,14 @@ int calculateColumnsNumber(double cost)
     return (int) (cost / COLUMN_COST);
 }
 
-void createCombinations(int array[], int elements, int columnNumbers)
+void createCombinations(Node **ColumnsList, int array[], int elements, int columnNumbers)
 {
-    int i;
     int a, b, c, d, e;
+    Column column;
 
     int combinations = ( factorial(elements) / (factorial(columnNumbers) * factorial(elements-columnNumbers) ) );
 
-    int column[combinations][columnNumbers];
-
     printf("\nΣύνολο συνδιασμών: %d\n", combinations);
-
-    i = 0;
 
     for (a=0; a<elements; a++) {
         for (b=a+1; b<elements; b++) {
@@ -174,23 +200,17 @@ void createCombinations(int array[], int elements, int columnNumbers)
                 for (d=c+1; d<elements; d++) {
                     for (e=d+1; e<elements; e++) {
 
-                        column[i][0] = array[a];
-                        column[i][1] = array[b];
-                        column[i][2] = array[c];
-                        column[i][3] = array[d];
-                        column[i][4] = array[e];
+                        column.array[0] = array[a];
+                        column.array[1] = array[b];
+                        column.array[2] = array[c];
+                        column.array[3] = array[d];
+                        column.array[4] = array[e];
 
-                        i++;
+                        insertNodeToColumnsList(ColumnsList, column);
                     }
                 }
             }
         }
-    }
-
-    // test
-
-    for(i=0; i<combinations; i++){
-        printArray(column[i], columnNumbers); printf("\n");
     }
 
 }
@@ -199,6 +219,7 @@ int main()
 {
     int numbers, tzokers, columns;
     double cost;
+    Node *ColumnsList;
 
     int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
 
@@ -224,7 +245,7 @@ int main()
     columns = calculateColumnsNumber(cost);
     printf("Σύνολο στηλών: %d\n", columns);
 
-    createCombinations(generatedNumbers, numbers, 5);
+    createCombinations(&ColumnsList, generatedNumbers, numbers, 5);
 
     return 0;
 }
