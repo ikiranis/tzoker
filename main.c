@@ -229,6 +229,7 @@ int createCombinations(int elements)
     int a, b, c, d, e;
     Column column;
 
+    // TODO refactor this with recursive function
     for (a=0; a<elements; a++) {
         for (b=a+1; b<elements; b++) {
             for (c=b+1; c<elements; c++) {
