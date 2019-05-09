@@ -19,10 +19,10 @@
 #define MAX_NUMBER 45
 #define MAX_TZOKER 20
 #define COLUMN_COST 0.50
-#define columnLength 5
+#define COLUMN_LENGTH 5
 
 typedef struct column {
-    int array[columnLength];
+    int array[COLUMN_LENGTH];
 } Column;
 
 typedef struct node {
@@ -62,7 +62,7 @@ void displayColumnsList(Node *head)
     Node *current = head;
 
     while(current != NULL) {
-        for(i=0; i<columnLength; i++) {
+        for(i=0; i<COLUMN_LENGTH; i++) {
             printf("%d ", current->column.array[i]);
         }
 
@@ -162,7 +162,7 @@ int getRandomNumber(int start, int limit)
  * @param elements
  * @return
  */
-int isInArray(int hay, int array[], int elements)
+int isInArray(int hay, const int array[], int elements)
 {
     int i;
 
@@ -207,14 +207,18 @@ int calculateColumnsNumber(double cost)
     return (int) (cost / COLUMN_COST);
 }
 
-void createCombinations(Node **ColumnsList, int array[], int elements, int columnNumbers)
+/**
+ * Create columns combinations
+ *
+ * @param generatedNumbers
+ * @param ColumnsList
+ * @param elements
+ * @param columnNumbers
+ */
+void createCombinations(const int generatedNumbers[], Node **ColumnsList, int elements)
 {
     int a, b, c, d, e;
     Column column;
-
-    int combinations = ( factorial(elements) / (factorial(columnNumbers) * factorial(elements-columnNumbers) ) );
-
-    printf("\nΣύνολο συνδιασμών: %d\n", combinations);
 
     for (a=0; a<elements; a++) {
         for (b=a+1; b<elements; b++) {
@@ -222,11 +226,11 @@ void createCombinations(Node **ColumnsList, int array[], int elements, int colum
                 for (d=c+1; d<elements; d++) {
                     for (e=d+1; e<elements; e++) {
 
-                        column.array[0] = array[a];
-                        column.array[1] = array[b];
-                        column.array[2] = array[c];
-                        column.array[3] = array[d];
-                        column.array[4] = array[e];
+                        column.array[0] = generatedNumbers[a];
+                        column.array[1] = generatedNumbers[b];
+                        column.array[2] = generatedNumbers[c];
+                        column.array[3] = generatedNumbers[d];
+                        column.array[4] = generatedNumbers[e];
 
                         insertNodeToColumnsList(ColumnsList, column);
                     }
@@ -234,12 +238,54 @@ void createCombinations(Node **ColumnsList, int array[], int elements, int colum
             }
         }
     }
+}
+
+/**
+ * Get random column from columns list
+ *
+ * @param head
+ * @param randomColumn
+ * @return
+ */
+Node * getRandomColumn(Node *head, int randomColumn)
+{
+    int i;
+    Node * current = head;
+
+    for(i=0; i<randomColumn; i++) {
+        current = current->next;
+    }
+
+    return current;
+}
+
+void printRandomColumns(Node *head, int columns, int combinations)
+{
+    int i, j;
+    int randomNumbers[columns];
+    Node * randomColumn;
+
+    for(i=0; i<columns; i++) {
+        do {
+            randomNumbers[i] = getRandomNumber(0, combinations);
+        } while (!isInArray(randomNumbers[i], randomNumbers, columns));
+
+        randomColumn = getRandomColumn(head, randomNumbers[i]);
+
+        for(j=0; j<COLUMN_LENGTH; j++) {
+            printf("%d ", randomColumn->column.array[j]);
+        }
+
+        printf("\n");
+    }
+
 
 }
 
 int main()
 {
     int numbers, tzokers, columns;
+    int combinations;
     double cost;
     Node *ColumnsList;
 
@@ -251,7 +297,7 @@ int main()
 
     numbers = 10;
     tzokers = 3;
-    cost = 2.50;
+    cost = 5.50;
 
     gererateRandomNumbers(generatedNumbers, numbers, MAX_NUMBER);
     gererateRandomNumbers(generatedTzokers, tzokers, MAX_TZOKER);
@@ -267,8 +313,13 @@ int main()
     columns = calculateColumnsNumber(cost);
     printf("Σύνολο στηλών: %d\n", columns);
 
-    createCombinations(&ColumnsList, generatedNumbers, numbers, 5);
-    displayColumnsList(ColumnsList);
+    combinations = ( factorial(numbers) / (factorial(columns) * factorial(numbers-columns) ) );
+    printf("\nΣύνολο συνδιασμών: %d\n", combinations);
+
+    createCombinations(generatedNumbers, &ColumnsList, numbers);
+//    displayColumnsList(ColumnsList);
+
+    printRandomColumns(ColumnsList, columns, combinations);
 
     return 0;
 }
