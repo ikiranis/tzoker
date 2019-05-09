@@ -30,6 +30,8 @@ typedef struct node {
     struct node * next;
 } Node;
 
+int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
+
 int numbers, tzokers, columns;
 double cost;
 int combinations;
@@ -221,7 +223,7 @@ int calculateColumnsNumber()
  * @param elements
  * @param columnNumbers
  */
-int createCombinations(const int generatedNumbers[], int elements)
+int createCombinations(int elements)
 {
     int countCombinations = 0;
     int a, b, c, d, e;
@@ -300,10 +302,6 @@ void printRandomColumns()
 
 int main()
 {
-
-
-    int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
-
     srandom(time(NULL));
 
 //    getUserData(&numbers, &tzokers, &cost);
@@ -328,7 +326,7 @@ int main()
 
 //    combinations = (int) ( factorial(numbers) / (factorial(columns) * factorial(numbers-columns) ) );
 
-    combinations = createCombinations(generatedNumbers, numbers);
+    combinations = createCombinations(numbers);
     printf("\nΣύνολο συνδιασμών: %d\n", combinations);
 
 //    displayColumnsList(ColumnsList);
