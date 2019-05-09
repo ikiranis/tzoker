@@ -272,7 +272,26 @@ Node * getRandomColumn(int randomColumn)
     return current;
 }
 
+/**
+ * Sort column numbers
+ *
+ * @param column
+ */
+void sortColumn(Column *column)
+{
+    int i, j, temp;
 
+    // Ascending Bubble sort
+    for (i=0; i<COLUMN_LENGTH-1; i++) {
+        for (j=COLUMN_LENGTH-1; j>=i+1; j--) {
+            if (column->array[j]<column->array[j-1]) {
+                temp = column->array[j-1];
+                column->array[j-1] = column->array[j];
+                column->array[j] = temp;
+            }
+        }
+    }
+}
 
 /**
  * Print a column
@@ -281,18 +300,9 @@ Node * getRandomColumn(int randomColumn)
  */
 void printColumn(Column column)
 {
-    int i, j, temp;
+    int i;
 
-    // Ascending Bubble sort
-    for (i=0; i<COLUMN_LENGTH-1; i++) {
-        for (j=COLUMN_LENGTH-1; j>=i+1; j--) {
-            if (column.array[j]<column.array[j-1]) {
-                temp = column.array[j-1];
-                column.array[j-1] = column.array[j];
-                column.array[j] = temp;
-            }
-        }
-    }
+    sortColumn(&column);
 
     for(i=0; i<COLUMN_LENGTH; i++) {
         printf("%3d", column.array[i]);
