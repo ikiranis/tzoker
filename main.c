@@ -341,11 +341,11 @@ int main()
 {
     srandom(time(NULL));
 
-//    getUserData(&numbers, &tzokers, &cost);
+    getUserData(&numbers, &tzokers, &cost);
 
-    numbers = 10;
-    tzokers = 3;
-    cost = 5.50;
+//    numbers = 10;
+//    tzokers = 3;
+//    cost = 5.50;
 
     gererateRandomNumbers(generatedNumbers, numbers, MAX_NUMBER);
     gererateRandomNumbers(generatedTzokers, tzokers, MAX_TZOKER);
@@ -362,8 +362,8 @@ int main()
     printf("Σύνολο στηλών: %d\n", columns);
 
     combinations = createCombinations(numbers);
-    printf("\nΣύνολο συνδιασμών: %d\n", combinations);
 
+    printf("\n%d επιλεγμένες τυχαίες στήλες από %d συνολικά συνδυασμούς\n", columns, combinations);
     printRandomColumns();
 
     return 0;
