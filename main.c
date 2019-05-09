@@ -283,6 +283,7 @@ void printRandomColumns()
 {
     int i, j;
     int randomNumbers[columns];
+    int randomTzoker;
     Node * randomColumn;
 
     for(i=0; i<columns; i++) {
@@ -291,12 +292,13 @@ void printRandomColumns()
         } while (!isInArray(randomNumbers[i], randomNumbers, columns));
 
         randomColumn = getRandomColumn(randomNumbers[i]);
+        randomTzoker = getRandomNumber(0, tzokers);
 
         for(j=0; j<COLUMN_LENGTH; j++) {
             printf("%d ", randomColumn->column.array[j]);
         }
 
-        printf("\n");
+        printf(" | %d\n", generatedTzokers[randomTzoker]);
     }
 }
 
@@ -323,8 +325,6 @@ int main()
 
     columns = calculateColumnsNumber(cost);
     printf("Σύνολο στηλών: %d\n", columns);
-
-//    combinations = (int) ( factorial(numbers) / (factorial(columns) * factorial(numbers-columns) ) );
 
     combinations = createCombinations(numbers);
     printf("\nΣύνολο συνδιασμών: %d\n", combinations);
