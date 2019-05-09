@@ -30,6 +30,10 @@ typedef struct node {
     struct node * next;
 } Node;
 
+int numbers, tzokers, columns;
+double cost;
+int combinations;
+
 /**
  * And column to columns List
  *
@@ -109,37 +113,37 @@ long int factorial(long int number)
  * @param tzokers
  * @param cost
  */
-void getUserData(int *numbers, int *tzokers, double *cost)
+void getUserData()
 {
     printf("\n");
     do {
         printf("Πόσους τυχαίους αριθμούς θέλεις να δημιουργήσεις? ");
-        scanf("%d", numbers);
+        scanf("%d", &numbers);
 
-        if( (*numbers < 1) || (*numbers > MAX_NUMBER) ) {
+        if( (numbers < 1) || (numbers > MAX_NUMBER) ) {
             printf("\nΠρέπει να επιλέξεις μεταξύ 1-%d\n", MAX_NUMBER);
         }
-    } while ( (*numbers < 1) || (*numbers > MAX_NUMBER) );
+    } while ( (numbers < 1) || (numbers > MAX_NUMBER) );
 
     printf("\n");
     do {
         printf("Πόσους τυχαίους αριθμούς ΤΖΟΚΕΡ θέλεις να δημιουργήσεις? ");
-        scanf("%d", tzokers);
+        scanf("%d", &tzokers);
 
-        if( (*tzokers < 1) || (*tzokers > MAX_TZOKER) ) {
+        if( (tzokers < 1) || (tzokers > MAX_TZOKER) ) {
             printf("\nΠρέπει να επιλέξεις μεταξύ 1-%d\n", MAX_TZOKER);
         }
-    } while ( (*tzokers < 1) || (*tzokers > MAX_TZOKER) );
+    } while ( (tzokers < 1) || (tzokers > MAX_TZOKER) );
 
     printf("\n");
     do {
         printf("Ποιο θέλεις να είναι το μέγιστο κόστος? ");
-        scanf("%lf", cost);
+        scanf("%lf", &cost);
 
-        if((*cost < COLUMN_COST)) {
+        if((cost < COLUMN_COST)) {
             printf("\nΤο ποσό πρέπει να είναι τουλάχιστον %3.2lf\n", COLUMN_COST);
         }
-    } while (*cost < COLUMN_COST);
+    } while (cost < COLUMN_COST);
 }
 
 /**
@@ -202,7 +206,7 @@ void gererateRandomNumbers(int array[], int elements, int limit)
  * @param cost
  * @return
  */
-int calculateColumnsNumber(double cost)
+int calculateColumnsNumber()
 {
     return (int) (cost / COLUMN_COST);
 }
@@ -217,7 +221,7 @@ int calculateColumnsNumber(double cost)
  */
 int createCombinations(const int generatedNumbers[], Node **ColumnsList, int elements)
 {
-    int combinations = 0;
+    int countCombinations = 0;
     int a, b, c, d, e;
     Column column;
 
@@ -235,14 +239,14 @@ int createCombinations(const int generatedNumbers[], Node **ColumnsList, int ele
 
                         insertNodeToColumnsList(ColumnsList, column);
 
-                        combinations++;
+                        countCombinations++;
                     }
                 }
             }
         }
     }
 
-    return combinations;
+    return countCombinations;
 }
 
 /**
@@ -271,7 +275,7 @@ Node * getRandomColumn(Node *head, int randomColumn)
  * @param columns
  * @param combinations
  */
-void printRandomColumns(Node *head, int columns, int combinations)
+void printRandomColumns(Node *head)
 {
     int i, j;
     int randomNumbers[columns];
@@ -294,9 +298,6 @@ void printRandomColumns(Node *head, int columns, int combinations)
 
 int main()
 {
-    int numbers, tzokers, columns;
-    int combinations;
-    double cost;
     Node *ColumnsList;
 
     int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
@@ -330,7 +331,7 @@ int main()
 
 //    displayColumnsList(ColumnsList);
 
-    printRandomColumns(ColumnsList, columns, combinations);
+    printRandomColumns(ColumnsList);
 
     return 0;
 }
