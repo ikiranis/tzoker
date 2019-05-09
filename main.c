@@ -295,7 +295,7 @@ void printColumn(Column column)
     }
 
     for(i=0; i<COLUMN_LENGTH; i++) {
-        printf("%d ", column.array[i]);
+        printf("%3d", column.array[i]);
     }
 }
 
@@ -308,7 +308,7 @@ void printColumn(Column column)
  */
 void printRandomColumns()
 {
-    int i, j;
+    int i;
     int randomNumbers[columns];
     int randomTzoker;
     Node * randomColumn;
@@ -323,7 +323,7 @@ void printRandomColumns()
 
         printColumn(randomColumn->column);
 
-        printf(" | %d\n", generatedTzokers[randomTzoker]);
+        printf("\t| %d\n", generatedTzokers[randomTzoker]);
     }
 }
 
