@@ -41,7 +41,6 @@ Node *ColumnsList;
 /**
  * And column to columns List
  *
- * @param head
  * @param column
  */
 void insertNodeToColumnsList(Column column)
@@ -61,8 +60,6 @@ void insertNodeToColumnsList(Column column)
 
 /**
  * Display columns of Columns List
- *
- * @param head
  */
 void displayColumnsList()
 {
@@ -112,10 +109,6 @@ long int factorial(long int number)
 
 /**
  * Get the data from user
- *
- * @param numbers
- * @param tzokers
- * @param cost
  */
 void getUserData()
 {
@@ -207,7 +200,6 @@ void gererateRandomNumbers(int array[], int elements, int limit)
 /**
  * Calculate how many columns can pick at this cost
  *
- * @param cost
  * @return
  */
 int calculateColumnsNumber()
@@ -218,10 +210,7 @@ int calculateColumnsNumber()
 /**
  * Create columns combinations
  *
- * @param generatedNumbers
- * @param ColumnsList
  * @param elements
- * @param columnNumbers
  */
 int createCombinations(int elements)
 {
@@ -257,7 +246,6 @@ int createCombinations(int elements)
 /**
  * Get random column from columns list
  *
- * @param head
  * @param randomColumn
  * @return
  */
@@ -312,10 +300,6 @@ void printColumn(Column column)
 
 /**
  * Display random columns from columns list
- *
- * @param head
- * @param columns
- * @param combinations
  */
 void printRandomColumns()
 {
