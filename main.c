@@ -34,13 +34,15 @@ int numbers, tzokers, columns;
 double cost;
 int combinations;
 
+Node *ColumnsList;
+
 /**
  * And column to columns List
  *
  * @param head
  * @param column
  */
-void insertNodeToColumnsList(Node **head, Column column)
+void insertNodeToColumnsList(Column column)
 {
     Node *new = (Node *) malloc(sizeof(Node));
 
@@ -51,8 +53,8 @@ void insertNodeToColumnsList(Node **head, Column column)
     }
 
     new->column = column;
-    new->next = *head;
-    *head = new;
+    new->next = ColumnsList;
+    ColumnsList = new;
 }
 
 /**
@@ -60,10 +62,10 @@ void insertNodeToColumnsList(Node **head, Column column)
  *
  * @param head
  */
-void displayColumnsList(Node *head)
+void displayColumnsList()
 {
     int i;
-    Node *current = head;
+    Node *current = ColumnsList;
 
     while(current != NULL) {
         for(i=0; i<COLUMN_LENGTH; i++) {
@@ -219,7 +221,7 @@ int calculateColumnsNumber()
  * @param elements
  * @param columnNumbers
  */
-int createCombinations(const int generatedNumbers[], Node **ColumnsList, int elements)
+int createCombinations(const int generatedNumbers[], int elements)
 {
     int countCombinations = 0;
     int a, b, c, d, e;
@@ -237,7 +239,7 @@ int createCombinations(const int generatedNumbers[], Node **ColumnsList, int ele
                         column.array[3] = generatedNumbers[d];
                         column.array[4] = generatedNumbers[e];
 
-                        insertNodeToColumnsList(ColumnsList, column);
+                        insertNodeToColumnsList(column);
 
                         countCombinations++;
                     }
@@ -256,10 +258,10 @@ int createCombinations(const int generatedNumbers[], Node **ColumnsList, int ele
  * @param randomColumn
  * @return
  */
-Node * getRandomColumn(Node *head, int randomColumn)
+Node * getRandomColumn(int randomColumn)
 {
     int i;
-    Node * current = head;
+    Node * current = ColumnsList;
 
     for(i=0; i<randomColumn; i++) {
         current = current->next;
@@ -275,7 +277,7 @@ Node * getRandomColumn(Node *head, int randomColumn)
  * @param columns
  * @param combinations
  */
-void printRandomColumns(Node *head)
+void printRandomColumns()
 {
     int i, j;
     int randomNumbers[columns];
@@ -286,7 +288,7 @@ void printRandomColumns(Node *head)
             randomNumbers[i] = getRandomNumber(0, combinations);
         } while (!isInArray(randomNumbers[i], randomNumbers, columns));
 
-        randomColumn = getRandomColumn(head, randomNumbers[i]);
+        randomColumn = getRandomColumn(randomNumbers[i]);
 
         for(j=0; j<COLUMN_LENGTH; j++) {
             printf("%d ", randomColumn->column.array[j]);
@@ -298,7 +300,7 @@ void printRandomColumns(Node *head)
 
 int main()
 {
-    Node *ColumnsList;
+
 
     int generatedNumbers[MAX_NUMBER], generatedTzokers[MAX_TZOKER];
 
@@ -326,12 +328,12 @@ int main()
 
 //    combinations = (int) ( factorial(numbers) / (factorial(columns) * factorial(numbers-columns) ) );
 
-    combinations = createCombinations(generatedNumbers, &ColumnsList, numbers);
+    combinations = createCombinations(generatedNumbers, numbers);
     printf("\nΣύνολο συνδιασμών: %d\n", combinations);
 
 //    displayColumnsList(ColumnsList);
 
-    printRandomColumns(ColumnsList);
+    printRandomColumns();
 
     return 0;
 }
