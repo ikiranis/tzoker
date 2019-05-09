@@ -93,7 +93,7 @@ void printArray(int array[], int elements)
  * @param number
  * @return
  */
-int factorial(int number)
+long int factorial(long int number)
 {
     if(number==0) {
         return 1; // Επιστρέφει 1 και τερματίζεται την αναδρομή
@@ -215,8 +215,9 @@ int calculateColumnsNumber(double cost)
  * @param elements
  * @param columnNumbers
  */
-void createCombinations(const int generatedNumbers[], Node **ColumnsList, int elements)
+int createCombinations(const int generatedNumbers[], Node **ColumnsList, int elements)
 {
+    int combinations = 0;
     int a, b, c, d, e;
     Column column;
 
@@ -233,11 +234,15 @@ void createCombinations(const int generatedNumbers[], Node **ColumnsList, int el
                         column.array[4] = generatedNumbers[e];
 
                         insertNodeToColumnsList(ColumnsList, column);
+
+                        combinations++;
                     }
                 }
             }
         }
     }
+
+    return combinations;
 }
 
 /**
@@ -259,6 +264,13 @@ Node * getRandomColumn(Node *head, int randomColumn)
     return current;
 }
 
+/**
+ * Display random columns from columns list
+ *
+ * @param head
+ * @param columns
+ * @param combinations
+ */
 void printRandomColumns(Node *head, int columns, int combinations)
 {
     int i, j;
@@ -278,8 +290,6 @@ void printRandomColumns(Node *head, int columns, int combinations)
 
         printf("\n");
     }
-
-
 }
 
 int main()
@@ -313,10 +323,11 @@ int main()
     columns = calculateColumnsNumber(cost);
     printf("Σύνολο στηλών: %d\n", columns);
 
-    combinations = ( factorial(numbers) / (factorial(columns) * factorial(numbers-columns) ) );
+//    combinations = (int) ( factorial(numbers) / (factorial(columns) * factorial(numbers-columns) ) );
+
+    combinations = createCombinations(generatedNumbers, &ColumnsList, numbers);
     printf("\nΣύνολο συνδιασμών: %d\n", combinations);
 
-    createCombinations(generatedNumbers, &ColumnsList, numbers);
 //    displayColumnsList(ColumnsList);
 
     printRandomColumns(ColumnsList, columns, combinations);
